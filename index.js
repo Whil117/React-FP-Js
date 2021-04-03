@@ -17,20 +17,6 @@ const operations = Object.freeze({
   subtract,
   divide
 });
-
-const mapReducer = (mapper) => (step) => (acc, el, index, arr) =>
-  step(acc, mapper(el, index, arr));
-
-const filterReducer = (predicate) => (step) => (acc, el, index, arr) =>
-  predicate(el, index, arr) ? step(acc, el) : acc;
-
-const isEven = (x) => modulo(x, 2) === 0;
-
-const isEvenAndMult = compose(
-  filterReducer(isEven),
-  mapReducer((number) => number * 2)
-);
-
 export default function App() {
   const [result, setResult] = useState(0);
   const [numbers, setNumbers] = useState({ num1: 0, num2: 0 });
@@ -63,12 +49,6 @@ export default function App() {
         <input onChange={handleInputNumber} name="num2" value={numbers.num2} />
         <h1>Result: {result}</h1>
       </div>
-      <ul>
-        {[1, 2, 3, 45, 6].reduce(
-          isEvenAndMult((acc, el) => acc + el),
-          0
-        )}
-      </ul>
     </>
   );
 }
